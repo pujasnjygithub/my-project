@@ -28,11 +28,15 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Build and Push Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v4
-      with:
-        image: sanjuicdocker/cicd-test
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: docker build
+      run: docker build -t cicd-test:1.0 .
+    
+    - name: docker login
+      run: docker login --username '${{secrets.DOCKER_LOGIN}}' --password '${{secrets.DOCKER_PASSWORD}}'
+      
+    - name: tag docker image
+      run: docker tag cicd-test:1.0 '${{secrets.DOCKER_LOGIN}}'/cicd-test:1.0
+    
+    - name: push docker image
+      run: docker push '${{secrets.DOCKER_LOGIN}}'/cicd-test:1.0
          
