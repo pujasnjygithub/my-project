@@ -35,7 +35,7 @@ jobs:
       run: docker login --username '${{secrets.DOCKER_LOGIN}}' --password '${{secrets.DOCKER_PASSWORD}}'
       
     - name: tag docker image
-      run: docker tag cicd-test:1.0 '${{secrets.DOCKER_LOGIN}}'/cicd-test:2.0
+      run: docker tag cicd-test:2.0 '${{secrets.DOCKER_LOGIN}}'/cicd-test:2.0
     
     - name: push docker image
       run: docker push '${{secrets.DOCKER_LOGIN}}'/cicd-test:2.0
